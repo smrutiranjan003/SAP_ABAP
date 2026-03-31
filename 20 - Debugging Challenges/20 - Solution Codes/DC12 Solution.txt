@@ -1,0 +1,67 @@
+*&---------------------------------------------------------------------*
+*& Report ZDEBUGGING_12
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : Secondary list not working.
+*Solution : Need to Use the conversion routine before fetching the data.
+
+REPORT zdebugging_12.
+
+
+TYPES : BEGIN OF lty_vbak,
+          vbeln TYPE vbeln_va,
+          erdat TYPE erdat,
+          erzet TYPE erzet,
+          ernam TYPE ernam,
+          vbtyp TYPE vbtypl,
+        END OF lty_vbak.
+
+DATA : lt_vbak TYPE TABLE OF lty_vbak.
+DATA : lwa_vbak TYPE lty_vbak.
+
+TYPES : BEGIN OF lty_vbap,
+          vbeln TYPE vbeln_va,
+          posnr TYPE posnr_va,
+          matnr TYPE matnr,
+        END OF lty_vbap.
+
+DATA : lt_vbap TYPE TABLE OF lty_vbap.
+DATA : lwa_vbap TYPE lty_vbap.
+DATA : lv_vbeln TYPE vbeln_va.
+
+SELECT-OPTIONS : s_vbeln FOR lv_vbeln.
+
+SELECT vbeln erdat erzet ernam vbtyp
+FROM vbak
+INTO TABLE lt_vbak
+WHERE vbeln IN s_vbeln.
+
+SORT lt_vbak BY vbeln.
+
+LOOP AT lt_vbak INTO lwa_vbak.
+  WRITE : / lwa_vbak-vbeln,
+            lwa_vbak-erdat,
+            lwa_vbak-erzet,
+            lwa_vbak-ernam,
+            lwa_vbak-vbtyp.
+ENDLOOP.
+
+AT LINE-SELECTION.
+
+  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+    EXPORTING
+      input  = sy-lisel+0(10)
+    IMPORTING
+      output = sy-lisel+0(10).
+
+  SELECT vbeln posnr matnr
+  FROM vbap
+  INTO TABLE lt_vbap
+  WHERE vbeln = sy-lisel+0(10).
+
+  LOOP AT lt_vbap INTO lwa_vbap.
+    WRITE : / lwa_vbap-vbeln,
+              lwa_vbap-posnr,
+              lwa_vbap-matnr.
+  ENDLOOP.

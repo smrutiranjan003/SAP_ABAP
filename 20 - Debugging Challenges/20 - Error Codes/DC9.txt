@@ -1,0 +1,166 @@
+*&---------------------------------------------------------------------*
+*& Report zsf_driver_program_28
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : Smartform PDF is not getting downloaded.
+*Solution : Need to uncomment the IMPORTING Keyword as the importing parameter returns the OTF data.
+*To replicate the scenario, take any program and smartform in which the PDF is getting downloaded.
+
+REPORT zsf_driver_program_28.
+DATA : lv_fname TYPE rs38l_fnam.
+DATA : lt_dtext TYPE tsftext.
+DATA : ls_dtext TYPE tline.
+DATA : ls_control_parameters TYPE ssfctrlop.
+DATA : ls_output_options TYPE ssfcompop.
+DATA : ls_output_info TYPE ssfcrescl.
+DATA : lt_lines TYPE TABLE OF tline.
+DATA : ls_job_output_info TYPE ssfcrescl.
+DATA : lt_lines_pdf TYPE TABLE OF tline.
+DATA : ls_lines_pdf TYPE  tline.
+
+
+PARAMETERS : p_ono TYPE zdeono_28.
+PARAMETERS : p_text TYPE char50.
+
+ls_dtext-tdformat = '*'.
+ls_dtext-tdline = p_text.
+APPEND ls_dtext TO lt_dtext.
+
+
+CALL FUNCTION 'SSF_FUNCTION_MODULE_NAME'
+  EXPORTING
+    formname           = 'ZSF_ORDER_28'
+*   VARIANT            = ' '
+*   DIRECT_CALL        = ' '
+  IMPORTING
+    fm_name            = lv_fname
+  EXCEPTIONS
+    no_form            = 1
+    no_function_module = 2
+    OTHERS             = 3.
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.
+
+
+ls_control_parameters-no_dialog = 'X'.
+ls_control_parameters-preview = 'X'.
+ls_control_parameters-getotf = 'X'.
+ls_output_options-tddest = 'LP01'.
+
+CALL FUNCTION lv_fname
+  EXPORTING
+*   ARCHIVE_INDEX      =
+*   ARCHIVE_INDEX_TAB  =
+*   ARCHIVE_PARAMETERS =
+    control_parameters = ls_control_parameters
+*   MAIL_APPL_OBJ      =
+*   MAIL_RECIPIENT     =
+*   MAIL_SENDER        =
+    output_options     = ls_output_options
+    user_settings      = ' '
+    p_ono              = p_ono
+    lt_text            = lt_dtext
+*  IMPORTING
+*   DOCUMENT_OUTPUT_INFO       =
+    job_output_info    = ls_job_output_info
+*   JOB_OUTPUT_OPTIONS =
+  EXCEPTIONS
+    formatting_error   = 1
+    internal_error     = 2
+    send_error         = 3
+    user_canceled      = 4
+    OTHERS             = 5.
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.
+
+
+CALL FUNCTION 'CONVERT_OTF'
+  EXPORTING
+    format                = 'PDF'
+*   MAX_LINEWIDTH         = 132
+*   ARCHIVE_INDEX         = ' '
+*   COPYNUMBER            = 0
+*   ASCII_BIDI_VIS2LOG    = ' '
+*   PDF_DELETE_OTFTAB     = ' '
+*   PDF_USERNAME          = ' '
+*   PDF_PREVIEW           = ' '
+*   USE_CASCADING         = ' '
+*   MODIFIED_PARAM_TABLE  =
+*  IMPORTING
+*   BIN_FILESIZE          =
+*   bin_file              =
+  TABLES
+    otf                   = ls_job_output_info-otfdata
+    lines                 = lt_lines_pdf
+  EXCEPTIONS
+    err_max_linewidth     = 1
+    err_format            = 2
+    err_conv_not_possible = 3
+    err_bad_otf           = 4
+    OTHERS                = 5.
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.
+
+
+CALL FUNCTION 'GUI_DOWNLOAD'
+  EXPORTING
+*   BIN_FILESIZE            =
+    filename                = 'C:\Users\RMEHTA\Desktop\Order.PDF'
+    filetype                = 'BIN'
+*   APPEND                  = ' '
+*   WRITE_FIELD_SEPARATOR   = ' '
+*   HEADER                  = '00'
+*   TRUNC_TRAILING_BLANKS   = ' '
+*   WRITE_LF                = 'X'
+*   COL_SELECT              = ' '
+*   COL_SELECT_MASK         = ' '
+*   DAT_MODE                = ' '
+*   CONFIRM_OVERWRITE       = ' '
+*   NO_AUTH_CHECK           = ' '
+*   CODEPAGE                = ' '
+*   IGNORE_CERR             = ABAP_TRUE
+*   REPLACEMENT             = '#'
+*   WRITE_BOM               = ' '
+*   TRUNC_TRAILING_BLANKS_EOL       = 'X'
+*   WK1_N_FORMAT            = ' '
+*   WK1_N_SIZE              = ' '
+*   WK1_T_FORMAT            = ' '
+*   WK1_T_SIZE              = ' '
+*   WRITE_LF_AFTER_LAST_LINE        = ABAP_TRUE
+*   SHOW_TRANSFER_STATUS    = ABAP_TRUE
+*   VIRUS_SCAN_PROFILE      = '/SCET/GUI_DOWNLOAD'
+* IMPORTING
+*   FILELENGTH              =
+  TABLES
+    data_tab                = lt_lines_pdf
+*   FIELDNAMES              =
+  EXCEPTIONS
+    file_write_error        = 1
+    no_batch                = 2
+    gui_refuse_filetransfer = 3
+    invalid_type            = 4
+    no_authority            = 5
+    unknown_error           = 6
+    header_not_allowed      = 7
+    separator_not_allowed   = 8
+    filesize_not_allowed    = 9
+    header_too_long         = 10
+    dp_error_create         = 11
+    dp_error_send           = 12
+    dp_error_write          = 13
+    unknown_dp_error        = 14
+    access_denied           = 15
+    dp_out_of_memory        = 16
+    disk_full               = 17
+    dp_timeout              = 18
+    file_not_found          = 19
+    dataprovider_exception  = 20
+    control_flush_error     = 21
+    OTHERS                  = 22.
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.

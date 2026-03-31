@@ -1,0 +1,45 @@
+                                                Debugging
+
+
+Debugging - 1) Debugging is a technique by which we can find the error, Correct the error and detect the error.
+            2) SAP Debugger is a part of ABAP workbench only.
+
+Ways of Debugging - 1) Put the breakpoint on any executeable statement and program will automtically stop at that point.
+                    2) We can debug the code with the help of transaction code /h.
+
+Execution Keys -  1) F5 - Step by Step Execution
+                  2) F6- Line by line Execution
+                  3) F7 - Return
+                  4) F8 - Continuous Execution or Exit.
+
+
+System Variables in Debugging Mode - SY-SUBRC , SY-TABIX
+
+Static and Dynamic break-point -> 
+
+Static break-points -> User Independent break-points
+
+Syntax : BREAK-POINT
+
+Dynamic break-point : User dependent break-point.
+
+Syntax : BREAK User name.
+
+
+Various Features in Debugging Mode for Internal tables -> 1) Change the contents of selected rows.
+                                                          2) Delete Selected rows.
+                                                          3) Delete all rows( Delete complete table)
+                                                          4) Append Row
+
+Path to move to a selected line : Debugger - Go to statement( Shift + F12).
+
+Put the Breakpoint on Keywords in Debugging Mode- Example - SELECT, CALL FUNCTION , MESSAGE
+
+Deleting and Deactivating breakpoints -> Deleting - Permanently deleting the breakpoints
+                                         Deactivating - Temperory deleting the break-points in that particular session.
+                                                        When the program again runs, the breakpoints will be there.
+
+Watch-points -> To monitor the values of variables and Internal tables.
+
+Break-points limit = 30
+Watch point limit = 10

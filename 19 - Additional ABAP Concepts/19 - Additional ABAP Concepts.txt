@@ -1,0 +1,66 @@
+                                      Conversion Routines
+
+Conversion Routines are used to convert from external display format to Internal storage format and 
+vice-versa.
+
+They are the part of the domain and are the function modules.
+
+
+                                    Concept of Change Document Log
+
+1) With the help of change document log we can track the changes made to that document.
+2) Change document log/history is available in CDHDR(Header table) & CDPOS(Item Table).
+
+Program : RSSCD100
+
+Transaction code for Change Document Object : SCDO
+
+Generates one FM : Change document object name_WRITE_DOCUMENT
+
+N->New -> For Insert
+O->Old -> For Delete
+N(New), O(old)-> For Update
+
+
+I -> INSERT
+D -> Delete
+U -> Update
+
+
+                                          CURSOR
+
+CURSOR is mainly used to extract data in segments/chunks/packets from the Database table.
+
+OPEN CURSOR      - It is used to open the cursor.
+FETCH NEXT CURSOR - It is used to fetch the data in packets.
+CLOSE CURSOR - It is used to close the cursor.
+
+
+
+                          Steps to Add Standard Text/Include Text to Transport Request
+
+1) Create a workbench transport request through SE09
+2) Change the type of the transport request task to development/correction.
+3) Run the program RSTXTRAN.
+4) Pass the transport request task and name of the standard text.
+5) Press enter and click on to add to task button.
+
+
+
+                                 Tables to Store the Standard Text/Include Text
+STXH - Standard Text Header
+STXL - Standard Text Item/Lines
+Function Module to Save the Standard Text/Include Text - SAVE_TEXT
+Function Module to Read the Standard Text/Include Text - READ_TEXT
+
+
+
+                                    
+
+
+
+                               
+
+
+
+

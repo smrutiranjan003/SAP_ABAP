@@ -1,0 +1,237 @@
+                                                    Smartforms
+
+
+                                                  Topic : Introduction
+
+Smartforms are layouts in SAP.
+
+Transaction code : Smartforms
+
+Form Attributes : Generic Information of Smartform( Date, Time, Package etc.)
+
+Form Interface : It's purpose is to pass Input and output parameters.
+
+Global Definition :  Global data, Types, Field-symbols, Initialization, Form routines, Currency/Quant. Fields.
+
+
+                                           Topic : Template and Table
+
+Template -> Tempate is used for fixed number of rows and columns.
+
+Table ->  When number of rows are not fixed, Table is preferable.
+
+We can say Template is for static data and Table is for dynamic data.
+
+Parts of Table : 
+
+1) Header
+2) Main area
+3) Footer
+
+
+                                         Topic : Calling of Smartform from the Driver Program.
+
+1) Every Smartform on execution generates Function Module.
+2) SAP Function Module to return the Function Module of a Smartform:  SSF_FUNCTION_MODULE_NAME
+
+
+                                         Topic :  Types of Windows
+
+1) Main Window: It is used for the continues output such as table output
+
+  Question : Can I run a smartform without main window.
+
+  Answer :  Yes. 
+
+2) Secondary Window: It is used for output with a fixed length
+
+3) Copies Window: It is also a kind of special secondary window 
+               which is used for making pages as copy or original
+
+   System variable for copy count : SFSY-COPYCOUNT
+
+4) Final Window: It is a kind of special secondary window used for details 
+                 which are needed to be processed only at the end of processing form.
+
+
+                                        Topic : Types of Text
+
+1) Text Element : Not a reuseable text. Dedicated to one smartform only.
+
+2) Text Module : It is a reuseable text. It is a reuseable text for smartforms.
+
+3) Include Text : It is a also reuseable text. It is a reuseable text for smartforms, programs etc.
+   Transaction code for Include text : SO10
+   Function Module to display Include Text : READ_TEXT
+
+4) Dynamic Text : This text is used to display the text at run time in smartform.(
+              Pre- defined table type - TSFTEXT)
+
+
+                                       Topic: Ways to Debug a Smartform
+
+1) Put the Session or External break point in the generated function module of the smartform.
+2) Put the BREAK-POINT  or Break Username in the smartform.
+
+
+                                     Topic : Downloading and Uploading
+
+1) Format of Smartfrom download and Upload :  XML
+
+
+                                    Topic : Creation of Graphics
+   
+1) Transaction code to upload graphics in SAP : SE78
+2) SAP Supports which types of Images : BMP( Bitmap)
+
+                                   Topic : Creation of Alternative
+1) Alternative option is like TRUE or FALSE.
+
+2) If you want to print something when the condition is TRUE then you can write it under TRUE node 
+   or if you want to print something when the condition is FALSE then you can write it under FALSE node.
+
+
+                                    Topic : Creation of Address
+
+1) Address are Storing in to ADRC table, We Can display the address.
+
+
+                                   Topic : Creation of Folder
+
+1) It is used to combine different node into logical groups.
+2) It is used to achieve page protection in smartforms, so that every thing in folder will be printed on same page
+
+
+                                  Topic : Creation of Page, Current Page and Total Page
+
+1) Creation of Page in Smartforms.
+2) System variable for Current page number : SFSY-PAGE
+3) System variable for total page number :  SFSY-FORMPAGES
+
+
+                                 Topic : Smartstyles
+
+1) Transaction code for Smartstyle : Smartstyles.
+
+
+                                Topic: Bar code
+
+1) Transaction code for Bar code : SE73.
+2) How to assign a bar code in the smartform : With the help of character format.
+
+
+                             Topic : Control Parameters, Output Options, User Settings in Smartforms.
+
+1) Use of Control Parameters, Output Options, User Settings.
+
+
+                            Topic : Steps to Covert Smartform output to PDF 
+
+Step-1 : Get the OTF(Output Text format) of Smartform
+
+Path to check the Output Format:
+
+Form Attributes->Output Options->Output Format
+
+Standard Output -> It is a Text format for Smartforms.
+                   It is an established format for printing forms in a SAP system.
+                   We can convert this format to other format like PDF. 
+
+Step-2 : Convert OTF to PDF 
+
+         CONVERT_OTF -> Use this Function Module to Convert OTF to PDF. 
+
+
+                            Topic :  Output Type  
+
+Output Type : Specifies the kind of output to be produced.
+
+Example : Printed form, E-Mail, FAX etc.  
+
+1) Transaction code for the mapping of output type, Smartform and driver program : NACE
+2) Table for the mapping of output type, Smartform and driver program : TNAPR
+
+
+Question : What is a Pre-printed Smartform?
+
+Answer : Preprinted Smartforms means that We are going to take output of the smartforms in a printed stationary.
+
+Link for Copies Window : http://www.saptechnical.com/Tutorials/Smartforms/Copies/Window.htm
+
+Link for Total using Calculation Tab : http://mysanjib.blogspot.com/2013/09/sum-in-footer-of-smartforms.html
+
+Link for Final Window : http://saptechnical.com/Tutorials/Smartforms/Final/Index.htm
+
+Link for Folder : http://sapabapmaterials4u.blogspot.com/2014/07/using-folder-options-for-page.html
+
+                                                           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+
+
+
+

@@ -1,0 +1,97 @@
+*&---------------------------------------------------------------------*
+*& Report ZPRG_MULTIPLE_FILES_EMPLOYEE
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : Debugging challenge related to file handling which worked in DEV, QAS but failed in PRD.
+*Solution : Authorization issue returning from standard function module : RZL_READ_DIR_LOCAL
+*Please refer to the video no 11 to 17 in file handling playlist to develop the full code from scratch
+
+REPORT zprg_multiple_files_employee.
+
+DATA : lt_files TYPE TABLE OF salfldir.
+DATA : lv_dirname TYPE salfile-longname.
+DATA : lwa_files TYPE salfldir.
+DATA : lv_filename(50) TYPE c.
+DATA : lv_string TYPE string.
+DATA : lv_empid(10) TYPE n.
+DATA : lv_ename(40) TYPE c.
+DATA : lv_eage(2) TYPE n.
+DATA : lv_eloc(3) TYPE c.
+DATA : lwa_emp TYPE ztemp_handle.
+DATA : lt_emp TYPE TABLE OF ztemp_handle.
+DATA : lv_adir(50) TYPE c VALUE '/usr/sap/A4H/SYS/src'.
+DATA : lv_afilename(50) TYPE c.
+DATA : lv_astring(50) TYPE c.
+
+
+
+PARAMETERS : p_dir(10) TYPE c DEFAULT '/tmp' LOWER CASE.
+
+
+START-OF-SELECTION.
+
+  lv_dirname = p_dir.
+
+
+  CALL FUNCTION 'RZL_READ_DIR_LOCAL'
+    EXPORTING
+      name               = lv_dirname
+*     FROMLINE           = 0
+*     NRLINES            = 1000
+    TABLES
+      file_tbl           = lt_files
+    EXCEPTIONS
+      argument_error     = 1
+      not_found          = 2
+      no_admin_authority = 3
+      OTHERS             = 4.
+  IF sy-subrc <> 0.
+* Implement suitable error handling here
+  ENDIF.
+
+
+  DELETE lt_files WHERE name NP 'Emp*'.
+
+
+  LOOP AT lt_files INTO lwa_files.
+    CONCATENATE p_dir '/' lwa_files-name INTO lv_filename.
+    OPEN DATASET lv_filename FOR INPUT IN TEXT MODE ENCODING DEFAULT.
+    IF sy-subrc = 0.
+      DO.
+        READ DATASET lv_filename INTO lv_string.
+        IF sy-subrc = 0.
+          SPLIT lv_string AT cl_abap_char_utilities=>horizontal_tab INTO lv_empid lv_ename lv_eage lv_eloc.
+          lwa_emp-eid = lv_empid.
+          lwa_emp-ename = lv_ename.
+          lwa_emp-eage = lv_eage.
+          lwa_emp-eloc = lv_eloc.
+          APPEND lwa_emp TO lt_emp.
+          CLEAR : lwa_emp.
+        ELSE.
+          EXIT.
+        ENDIF.
+      ENDDO.
+     CLOSE DATASET lv_filename.
+    ENDIF.
+    IF lt_emp IS NOT INITIAL.
+      DELETE lt_emp INDEX 1.
+      INSERT ztemp_handle FROM TABLE lt_emp.
+      IF sy-subrc = 0.
+      WRITE : TEXT-000, lwa_files-name.
+      ELSE.
+      WRITE : TEXT-001,lwa_files-name.
+    ENDIF.
+     ENDIF.
+    CONCATENATE lv_adir '/' LWA_FILES-NAME INTO lv_afilename.
+    OPEN DATASET lv_afilename FOR OUTPUT IN TEXT MODE ENCODING DEFAULT.
+    IF sy-subrc = 0.
+    LOOP at lt_emp INTO lwa_emp.
+    CONCATENATE lwa_emp-eid lwa_emp-ename lwa_emp-eage lwa_emp-eloc INTO lv_astring SEPARATED BY cl_abap_char_utilities=>horizontal_tab.
+    TRANSFER lv_astring TO  lv_afilename.
+    ENDLOOP.
+    CLOSE DATASET lv_afilename.
+    ENDIF.
+    DELETE DATASET lv_filename.
+    REFRESH : lt_emp.
+  ENDLOOP.

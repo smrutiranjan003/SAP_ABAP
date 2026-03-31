@@ -1,0 +1,308 @@
+                                  ABAP OOPS( Object Oriented Programming system)
+
+1) OOPS Concepts
+
+a) Class -> Collection of objects( Methods, Attributes, Events,Interfaces)
+
+b) Object -> Instance of a class.
+
+c) Inheritance -> Creating a Sub class from Parent class.
+The concept of Inheritance allows us to derive new classes from existing classes.
+
+Mutiple Inheritance is not possible in ABAP, but we can achieve multiple Inheritance with the help of Interfaces. 
+
+d) Polymorphism -> Multiple forms.
+
+Polymorphism is a characteristic of being able to assign a different behavior or value in a subclass, to something that was declared in a parent class. 
+For example, a method can be declared in a parent class, but each subclass can have a different implementation of that method.
+
+e) Encapsulation -> Binding of data and functions in to a single unit( Capsule form) -> Data Hiding
+
+
+2) Types of classes
+
+ a) Global classes -> Transaction code : SE24( Class Builder) , We can reuse the global classes.
+
+   a) Usual ABAP Class -> It's purpose is to write the logic( It is equal to Function module of Core ABAP).
+   b) Exception class -> It's purpose is to raise and handle the exception.
+   C) Persistence class -> It's purpose is to perform database operations.( Insert,Update,Delete)
+   4) Unit Test class  -> It's purpose is to write unit test cases.
+
+b) Local Classes -> Dedicated to one program only. We can create local classes with the help of SE38 transaction code.
+
+   Class Definition : Declarations.
+   Class Implementation: Logic
+
+3) Levels of Method
+
+a) Instance Method -> We need to create a object to call that method.
+
+    ->  Instance Method
+
+b) Static Method ->  There is no need to create a object.
+
+    =>  Static Method.
+
+4) Visibility Control
+   
+   a) Public : Can be accessed with in the class, With in Subclasses, Outside the class.
+   b) Private : Can only be accessed with in the class. 
+   c) Protected : Can be accessed with in the class, With in Subclasses, not outside the class.
+
+5) Type of Parameters in Class Methods:
+   a) Importing  -> Input
+   b) Exporting  -> Output
+   c) Changing -> Input/Output
+   d) Returning ->A Method can have any number of Exporting and changing parameters, but returning is always one.
+
+6) Declaration & Creation of object : 
+
+DATA : LO_OBJECT TYPE REF TO ZCL_TEST.
+
+CREATE OBJECT LO_OBJECT.
+
+Where : LO_OBJECT = Object name.
+        ZCL_TEST = Class name.
+
+  
+Q: How to declare Static and Instance Method in Local classes?
+
+Answer : Instance Method : Methods 
+         Static Method   : Class-Methods  
+
+Q: How to declare Static and Instance attributes in Local classes?
+
+Answer : Instance attribute : DATA 
+         Static attribute   : CLASS-DATA  
+
+Instance method can access both the instance and static attributes.
+Static Method can only access the static attributes.
+
+
+7) FINAL Class->
+
+A final class is that class which can not be inherited. A final class can not have sub-classes.
+
+
+8) Abstract Class->
+
+It is a specical type of class which has at least one abstract method.
+Abstract method is that method which has only definition. There will not be any Implementation.
+We can not create object of Abstract class.
+We can create objects of Sub classes of Abstract class.
+
+9) Interface->
+
+In Interface all methods are public by default.
+In Inteface all methods are abstract methods( There is only definition, no implementation).
+
+
+10) Difference between Abstract class and Interface
+
+Abstract Class  -> 
+1) In Abstract class, we have at least one abstract method, others can be non-abstract methods.
+2) Method visibilty can be - Public, Private, Protected
+3) We need to redefine the abstract method in to sub classes to perform the implemenation in Sub class.
+Important Point : We can not redefine a static method.
+4) Multiple Inheritance is not possible.
+
+
+Interface -> 
+1) All methods are abstract methods in Interface.
+2) All methods are public.
+3) There is no need to click on the redefine button( redefine button is disabled) , We can write the logic in class by double clicking on the method.
+4) Multiple Inheritance is possible.
+
+11) Events -> By Which method of one class can call method of another class.
+
+Triggering Method - Which will raise the event.
+Event Handler Method -> Which will handle the event.
+Register the event handler method using SET HANDLER statement.
+
+Syntax for Event Handler.
+
+SET HANDLER lo_object1->event_handler for lo_object2.
+
+Where   lo_object1 = Class Object in Which Event handler method is defined.
+        Event_handler -> Event handler method name.
+        lo_object2-> Class Object in which triggering method is defined.
+
+
+Multiple Event Handlers
+
+12) CONSTRUCTORS:
+
+1) Constructor is a special type of method which is executed automatically when a object is created.
+2) They can not be called using call Method statement.
+3) Constructors are methods with a predefined name.
+4) Multiple CONSTRUCTOR and CLASS_CONSTRUCTOR are not allowed with in a class.
+
+
+Types of constructors :
+
+1) CONSTRUCTOR( INSTANCE Constructor)
+   Name of the Method : CONSTRUCTOR.
+   It has only Importing parameters.
+   It can access both static and Instance attributes.
+   It is called every time when a object is created.
+   Used to set default value for a particular instance.
+ 
+2) CLASS_CONSTRUCTOR( STATIC Constructor).
+   Name of the Method : CLASS_CONSTRUCTOR.
+   It does not have any parameters.
+   It can access only static attributes.
+   It is called first time when a object is created.
+
+13) Me Keyword->
+
+A method can have a variable defined within it having the same name as one of the attributes of the class to which 
+the method belongs to.
+
+To clearly identify the class level attribute, the selector ME is used.
+
+
+14) Additional knowledge on Exception class
+
+Exception class name should start with a keyword CX.
+
+CX_ROOT - is the global class for all the exceptions.
+
+CX_STATIC_CHECK & CX_DYNAMIC_CHECK.
+
+Use TRY block to raise a exception. Use CATCH blocks to handle a exception.
+
+Syntax to raise a Exception :  
+
+RAISE EXCEPTION TYPE ( Exception Id).
+
+15) Additional knowledge of Persistence Class
+    
+Persistence class name should start with CL keyword.
+2 Helper classes automatically created - CA & CB.
+CA is called as Actor class of Agent class.
+CB is called as Base class. 
+
+Method Overloading and Method Overriding->
+
+Method overloading
+
+1) It occurs within the class
+2) In method overloading, methods must have the same name and different signatures. 
+
+
+Method Overriding
+
+1) It is performed in two classes with inheritance relationship( superclass method and subclass method).
+2) In Method overriding, methods must have the same name and same signature.
+
+Method Overloading in not possible in SAP ABAP OOPS.
+
+
+
+                                  ALV by CL_GUI_ALV_GRID Class
+
+1) Steps to Create ALV
+
+Step1: Create a Field catalog.
+   a) USE SAP Function Module( LVC_FIELDCATALOG_MERGE) to create a field catalog.
+   b) Manually create a Fieldcatalog.
+
+Step2 : Create a Custom Control( Layout element) on a screen.
+
+Step3:  Create an Object of the Container class( CL_GUI_CUSTOM_CONTAINER)
+
+Step4 : Create an Object of the ALV GRID class( CL_GUI_ALV_GRID) and pass the object of container class in the parent parameter.
+
+Step5 : Use Method :Use ALV GRID class( CL_GUI_ALV_GRID) Method(SET_TABLE_FOR_FIRST_DISPLAY) to display the data.
+
+
+2) Non-Event based Functionlity in ALV OOPS
+   Sorting,Filtering etc.
+
+3) Event based Functionality in ALV OOPS
+   Double clicking, HotSpot clicking etc.
+
+
+                                   ALV by CL_SALV_TABLE Class
+
+1) CL_SALV_TABLE class is a part of ALV object model.
+2) ALV object model is an encapsulation of the the pre-existing ALV tools.
+3) For Example - CL_SALV_TABLE actually combines both the CL_GUI_ALV_GRID class for 
+   container implementation, as well as the REUSE_ALV_GRID_DISPLAY and REUSE_ALV_LIST_DISPLAY 
+   function modules for full screen display.
+
+Advantage of ALV Object Model : It provides a collective interface to ALV tools.
+                      
+Disadvange of ALV Object Model : We can not go for editable ALV using ALV object model.
+
+
+                               Steps to Create ALV by CL_SALV_TABLE
+    
+Step1 : Call the FACTORY Method of CL_SALV_TABLE to get the instance of ALV table object.
+Step2 : Call the DISPLAY Method of CL_SALV_TABLE to display the ALV. 
+
+Important Links :
+
+Link for Static and Instance Methods: 
+
+http://www.sapspot.com/abap-objects-for-beginners-part-2-static-vs-instance-components/
+
+Link for Interfaces.
+https://www.sapnuts.com/courses/Object-Oriented-ABAP/interfaces-local-class/local-class-interfaces.html
+
+Inheritance in Local Classes:
+https://www.sapnuts.com/courses/Object-Oriented-ABAP/inheritance-local-class/inheritance-local-class.html
+
+Displaying multiple ALV's in container
+http://saptechnical.com/Tutorials/ALV/Internal/Page2.htm
+
+Difference Between Abstraction and Encapsulation.
+https://www.guru99.com/java-data-abstraction.html
+
+Difference between Overloading and overriding
+https://answers.sap.com/questions/2431477/overloading--overriding.html
+
+Passing Multiple Exceptions using Global Exception Class.
+https://blogs.sap.com/2021/08/08/exceptions-in-oabap-for-new-abapers/
+https://answers.sap.com/questions/4443655/exceptions.html
+
+Logo in ALV
+https://sapient.wordpress.com/2007/06/29/object-oriented-alv-sample-program-to-insert-logo-in-alv/
+
+SALV Editable Blog
+https://blogs.sap.com/2015/02/08/international-editable-salv-day-2015/
+https://answers.sap.com/questions/5222376/differences-between-clsalv-family-class-and-clguia.html
+https://answers.sap.com/questions/3943045/difference-between-clguialvgrid-and-clsalvtable.html?childToView=3943162
+
+SALV Double Click , Hot Spot Click and GUI Status
+https://belajarabap.wordpress.com/2022/01/29/alv-report-using-cl_salv_table/
+
+Link for Persistence Class
+https://help.sap.com/doc/abapdocu_750_index_htm/7.50/en-US/abenos_persistence_comps.htm
+
+Function Module : GET_GLOBALS_FROM_SLVC_FULLSCR
+Function Module to get Text for a Key : SOTR_GET_TEXT_KEY
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

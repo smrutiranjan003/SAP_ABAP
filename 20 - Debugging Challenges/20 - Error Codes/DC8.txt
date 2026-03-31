@@ -1,0 +1,21 @@
+*Problem statement : No output in module pool program.
+*Solution : The SY-UCOMM captures the value of function code. Need to provide the correct function code and it needs to be in capital.
+*To replicate the scenario, create a module pool program. 
+*In the layout and in the code use different function code.
+*VBELN is input and ERDAT, ERZET, ERNAM and VBTYP are output.
+
+
+DATA : lv_vbeln TYPE vbeln_va.
+DATA : lv_erdat TYPE erdat.
+DATA : lv_erzet TYPE erzet.
+DATA : lv_ernam TYPE ernam.
+DATA : lv_vbtyp TYPE vbtyp.
+
+IF sy-ucomm = 'SUBMIT'. 
+SELECT SINGLE erdat erzet ernam vbtyp
+  FROM vbak
+  INTO ( lv_erdat, lv_erzet, lv_ernam, lv_vbtyp )
+  WHERE vbeln = lv_vbeln.
+ENDIF.
+
+

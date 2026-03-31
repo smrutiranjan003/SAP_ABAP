@@ -1,0 +1,116 @@
+                                               Transport Organizer
+
+Transport request : It is a mechanism to send the objects from one system to other system.
+
+Types of Systems :
+
+Development -> For Development
+Quality -> For Testing
+Production -> Live System( Customer based system)
+
+
+Transaction codes :
+
+1) SE09/SE10 -> Transport Organizer.
+2) SE01 -> Transport Organizer( Extended View)
+3) SE03 -> Transport Organizer Tools( Functions like - Adding objects to TR, Analyzing objects in TR etc.)
+4) STMS -> SAP Transport Management system.( Transport Layers are defined in STMS & we can define transport routes).
+5) STMS_IMPORT -> To Import the transport requests.
+
+Two procedures to use import Queue to perform import by BASIS team:
+
+1.Mass Transport( STMS_IMPORT) -> Import all Requests
+2.Single Transport( STMS_IMPORT) -> Import Request
+
+Transport Layer -> It is used to establish the path to move the objects.
+                   SAP is a standard transport layer used to move SAP standard objects.
+                   Z<SID> is custom layer by default available to move the development objects.
+                   Where SID = system id.
+                   A transport layer is assigned to each development class/package and thus to all the
+                   objects in that class.
+
+
+Types of Transport Request :
+1) Workbench Request :A workbench generally for things you would create in the ABAP workbench. This is primarily code or custom objects.
+                      A request for carrying out development work in the ABAP Workbench.
+2) Customizing Request: Configuration changes in SPRO , Customizing table contents.
+3) Transport of Copies : It is used to transfer the changes to the other system without releasing the main TR. After successful testing, you can release your main TR.
+                         So, you will have a single TR for all your changes. 
+                        We can combine objects from multiple TR's in to a single TOC( trasnport of copies). 
+4) Relocation: You can use this request type when you want to change the development system of individual objects on a permanent basis.
+
+Status of Transport Request : 1) Modifiable
+                              2) Released
+   
+Link for Requests : http://sapbasiscrew.blogspot.com/2016/09/different-types-of-transport-requests.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+
+
+
+

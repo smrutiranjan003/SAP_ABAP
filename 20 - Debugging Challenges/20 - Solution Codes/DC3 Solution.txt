@@ -1,0 +1,86 @@
+*&---------------------------------------------------------------------*
+*& Report ZDEBUG_3
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : No output from the function module.
+*Solution : The output data is passed to the local parameter of the function module.
+*It need to be passed to the export parameter of the function module.
+*The correct code of the function module is below the program code.
+
+
+REPORT ZDEBUG_3.
+DATA : lt_final TYPE ztstr_sales_details.
+DATA : lwa_final TYPE zstr_sales_details.
+
+PARAMETERS : p_vbeln TYPE vbeln_va.
+
+CALL FUNCTION 'ZFM_SALES'
+  EXPORTING
+    pvbeln    = p_vbeln
+  IMPORTING
+    lt_output = lt_final.
+
+LOOP AT lt_final INTO lwa_final.
+  WRITE: / lwa_final-vbeln, lwa_final-erdat, lwa_final-erzet, lwa_final-ernam, lwa_final-posnr,lwa_final-matnr.
+ENDLOOP.
+
+
+
+*Function module code.
+FUNCTION zfm_sales.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(PVBELN) TYPE  VBELN_VA
+*"  EXPORTING
+*"     VALUE(LT_OUTPUT) TYPE  ZTSTR_SALES_DETAILS
+*"----------------------------------------------------------------------
+  TYPES : BEGIN OF lty_data,
+            vbeln TYPE vbeln_va,
+            erdat TYPE erdat,
+            erzet TYPE erzet,
+            ernam TYPE ernam,
+          END OF lty_data.
+
+  DATA : lt_data TYPE TABLE OF lty_data.
+  DATA : lwa_data TYPE lty_data.
+
+  TYPES : BEGIN OF lty_data1,
+            vbeln TYPE vbeln_va,
+            posnr TYPE posnr_va,
+            matnr TYPE matnr,
+          END OF lty_data1.
+
+  DATA : lt_data1 TYPE TABLE OF lty_data1.
+  DATA : lwa_data1 TYPE lty_data1.
+  DATA : lwa_final TYPE zstr_sales_details.
+  DATA : lt_final TYPE ztstr_sales_details.
+
+  SELECT vbeln erdat erzet ernam
+  FROM vbak
+  INTO TABLE lt_data
+  WHERE vbeln = pvbeln.
+
+  IF lt_data IS NOT INITIAL.
+    SELECT vbeln posnr matnr
+    FROM vbap
+    INTO TABLE lt_data1
+    FOR ALL ENTRIES IN lt_data
+    WHERE vbeln = lt_data-vbeln.
+  ENDIF.
+
+  LOOP AT lt_data INTO lwa_data.
+    LOOP AT lt_data1 INTO lwa_data1 WHERE vbeln = lwa_data-vbeln.
+      lwa_final-vbeln =  lwa_data-vbeln.
+      lwa_final-erdat =  lwa_data-erdat.
+      lwa_final-erzet =  lwa_data-erzet.
+      lwa_final-ernam =  lwa_data-ernam.
+      lwa_final-posnr =  lwa_data1-posnr.
+      lwa_final-matnr =  lwa_data1-matnr.
+      APPEND lwa_final TO lt_output.
+      CLEAR : lwa_final.
+    ENDLOOP.
+  ENDLOOP.
+
+ENDFUNCTION.

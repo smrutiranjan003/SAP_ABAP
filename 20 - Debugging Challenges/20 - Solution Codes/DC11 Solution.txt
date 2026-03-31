@@ -1,0 +1,73 @@
+*&---------------------------------------------------------------------*
+*& Report ZDEBUGGING_11
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : F4 help not working.
+*Solution : Need to use data dictionary data elements rather than elementary data types.
+
+REPORT zdebugging_11.
+
+TYPES : BEGIN OF lty_vbtyp,
+          vbtyp TYPE char1,
+          desc TYPE char40,
+        END OF lty_vbtyp.
+
+DATA : lt_vbtyp TYPE TABLE OF lty_vbtyp.
+DATA : lwa_vbtyp TYPE lty_vbtyp.
+
+
+PARAMETERS : p_vbtyp TYPE vbtypl.
+
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vbtyp.
+
+  lwa_vbtyp-vbtyp = 'A'.
+  lwa_vbtyp-desc = TEXT-000. "'Standard Order'.
+  APPEND lwa_vbtyp TO lt_vbtyp.
+  CLEAR : lwa_vbtyp.
+
+
+  lwa_vbtyp-vbtyp = 'B'.
+  lwa_vbtyp-desc = TEXT-001. "'Inquiry'.
+  APPEND lwa_vbtyp TO lt_vbtyp.
+  CLEAR : lwa_vbtyp.
+
+  lwa_vbtyp-vbtyp = 'C'.
+  lwa_vbtyp-desc = TEXT-002.  "'Quotation'.
+  APPEND lwa_vbtyp TO lt_vbtyp.
+  CLEAR : lwa_vbtyp.
+
+
+  CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    EXPORTING
+*     DDIC_STRUCTURE  = ' '
+      retfield        = 'VBTYP'
+*     PVALKEY         = ' '
+      dynpprog        = sy-repid
+      dynpnr          = sy-dynnr
+      dynprofield     = 'P_VBTYP'
+*     STEPL           = 0
+*     WINDOW_TITLE    =
+*     VALUE           = ' '
+      value_org       = 'S'
+*     MULTIPLE_CHOICE = ' '
+*     DISPLAY         = ' '
+*     CALLBACK_PROGRAM       = ' '
+*     CALLBACK_FORM   = ' '
+*     CALLBACK_METHOD =
+*     MARK_TAB        =
+* IMPORTING
+*     USER_RESET      =
+    TABLES
+      value_tab       = lt_vbtyp
+*     FIELD_TAB       =
+*     RETURN_TAB      =
+*     DYNPFLD_MAPPING =
+    EXCEPTIONS
+      parameter_error = 1
+      no_values_found = 2
+      OTHERS          = 3.
+  IF sy-subrc <> 0.
+* Implement suitable error handling here
+  ENDIF.

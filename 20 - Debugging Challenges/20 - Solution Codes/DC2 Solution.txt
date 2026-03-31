@@ -1,0 +1,51 @@
+*&---------------------------------------------------------------------*
+*& Report ZDEBUG_2
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : No output in report.
+*Solution : Corrected the name of the work area which is passed in the where Condition.
+
+REPORT ZDEBUG_2.
+
+TYPES : BEGIN OF lty_data1,
+        vbeln TYPE vbeln_va,
+        erdat TYPE erdat,
+        erzet TYPE erzet,
+        ernam TYPE ernam,
+        END OF lty_data1.
+
+TYPES : BEGIN OF lty_data2,
+        vbeln TYPE vbeln_va,
+        posnr TYPE posnr,
+        matnr TYPE matnr,
+        END OF lty_data2.
+
+DATA : lt_data1 TYPE TABLE OF lty_data1.
+DATA : lwa_data1 TYPE lty_data1.
+DATA : lt_data2 TYPE TABLE OF lty_data2.
+DATA : lwa_data2 TYPE lty_data2.
+
+PARAMETERS : p_vbeln type vbeln_va.
+
+SELECT vbeln erdat erzet ernam
+FROM vbak
+INTO TABLE lt_data1
+WHERE vbeln =  p_vbeln.
+
+
+IF sy-subrc = 0.
+SELECT vbeln posnr matnr
+FROM vbap
+INTO TABLE lt_data2
+FOR ALL ENTRIES IN lt_data1
+WHERE vbeln = lt_data1-vbeln.
+ENDIF.
+
+
+
+LOOP AT lt_data1 INTO lwa_data1.
+LOOP AT lt_data2 INTO lwa_data2 WHERE vbeln = lwa_data1-vbeln.
+WRITE: / lwa_data1-vbeln, lwa_data1-erdat, lwa_data1-erzet, lwa_data1-ernam, lwa_data2-posnr,lwa_data2-matnr.
+ENDLOOP.
+ENDLOOP.

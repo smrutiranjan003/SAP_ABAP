@@ -1,0 +1,187 @@
+The Matrix Layout arranges the UI elements as a table
+
+Matrix Head Data - We can specify the UI element that appears at the start of each new line.
+
+Matrix Data - We can specify the UI element in the continuation of that line.  
+
+Context - The data resides in the context.
+
+Node - It is a collection of attributes.
+
+
+                                                                    Assistance Class:
+
+
+1) For each Web Dynpro component, We can create a uniquely assigned assistance class.
+2) This class should inherit from the abstract class CL_WD_COMPONENT_ASSISTANCE.
+
+Benefits of Assistance Class:
+1) You can store coding there that is required within the component, 
+   but is not linked directly with the layout or with the function of a controller
+
+2) The second important function of the assistance class is the management of dynamic texts
+   This is achieved through text symbols of assistance class. 
+
+The instance of Assistance class is available through the attribute WD_ASSIST.
+
+                                                                        Cardinality :
+
+The cardinality property is a combination of the minimum and maximum number of elements 
+that can be in the node collection at runtime.
+
+                                                                     Inbound and Outbound Plugs:
+To navigate between the views.
+
+Steps.
+1) Create a outbound plug in first view and corresponding inbound plug in second view.
+2) Create a outbound plug in second view and corresponding inbound plug in first view.
+3) Embed the views in the window and create the navigation link.
+   (Outbound plug of first view navigates to inbound plug of second view)
+   (Outbound plug of second view navigates to inbound plug of firs view)
+
+
+
+                                                                Properties :
+
+Properties - Visible, Invisible, Enable, disable , Read-only
+Visible = TRUE , X
+Visible = FALSE ,  ' ' 
+Enable = TRUE , X
+Enable = FALSE , ' '
+Read-only = TRUE , X
+Read-only = FALSE , ' '
+
+WDDO - All these are pre-defined methods. Hook Methods
+
+
+                                                             Messages in Web Dynpro ABAP:
+
+IF_WD_MESSAGE_MANAGER
+
+
+                                                                Component Usage : 
+
+1) OVS - WDR_OVS
+2) ALV - SALV_WD_TABLE
+3) Select-Options - WDR_SELECT_OPTIONS
+
+OVS : 
+
+Introduction
+
+OVS stands for Object Value Selector. The purpose of OVS is to assign a search help.
+
+Difference between Search help and OVS:
+
+We use search help only for one field to which it is bound whereas with the help of OVS we can populate 
+multiple fields based on one field on the screen.
+
+Model 
+
+OVS is based upon PHASE MODEL and there are total 4 phases. 
+The current phase is indicated by the parameter PHASE_INDICATOR.
+
+1) Phase 0 - It is also called as Configuration phase. It's purpose is to define the texts. 
+2) Phase 1 - It's purpose is to provide the default values.
+3) Phase 2 - It's purpose is to select the data.
+4) Phase 3 - It's purpose is to apply(return) the result.
+
+
+Steps for OVS:
+Step - 1 : Add 'WDR_OVS' component to our own Web Dynpro Component.
+
+Step - 2 : Wherever the context has been defined, in that component's properties tab add the 
+           OVS component.
+
+           The context can be at View level and component controller level.
+
+Step - 3 : Now in context tab select an attribute for which OVS has to be defined.
+           Set the value of 'Input Help Mode' property as 'Object Value Selector' (OVS)
+           Pass the value of 'OVS Component Usage' property.
+
+Step - 4 : Go to Method tab and create a method to get OVS Search Help.
+           Name can be anything but for that method. We have to specify an event to trigger 
+           OVS search help.
+
+           Once the method is defined, we get an auto generated OVS code.
+
+
+ALV : ABAP List Viewer
+ALV has inbuilt features so ALV is preferable.
+
+1) Sorting of data in ascending or descending order
+2) Filtering the data
+3) Exporting the data
+4) Hiding the columns/displaying the selected columns
+
+
+Steps for ALV:
+
+Step - 1 : Create a ViewContainerUIElement. 
+           It is just an area with in a view which is used to display another view.
+   
+Step - 2 : Add 'SALV_WD_TABLE' component to our own Web Dynpro Component.
+
+Step -3 :  Go to windows and embed the interface view TABLE of SALV_WD_TABLE in ViewContainerUIElement. 
+
+Step -4 :  Define an external mapping between the data node of the interface controller usage and 
+           the source node containing the data to be displayed on ALV list.
+
+
+
+Steps for Select-Options:
+
+Step - 1 : Create a ViewContainerUIElement. 
+           It is just an area with in a view which is used to display another view.
+
+Step - 2 : Add WDR_SELECT_OPTIONS component to our own Web Dynpro Component.
+
+Step - 3 : Define controller usage for WDR_SELECT_OPTIONS in the properties tab of view. 
+
+Step - 4 : Write the logic in the WDDOINIT method of the view.
+
+1) Instantiate used component  WDR_SELECT_OPTIONS.
+2) Instantiate used component controller IWCI_WDR_SELECT_OPTIONS and call method INIT_SELECTION_SCREEN.
+3) Create range table using IF_WD_SELECT_OPTIONS->CREATE_RANGE_TABLE.
+4) Add selection field by passing range table and field to IF_WD_SELECT_OPTIONS-> ADD_SELECTION_FIELD .
+
+Step - 5 : Go to windows and embed the view WND_SELECTION_SCREEN of Used Component WDR_SELECT_OPTIONS into ViewContainerUIElement of Web Dynpro Component. 
+
+
+                                                     Concept of Translation in Web Dynpro ABAP : 
+
+Translation Methods : 
+
+1) Using texts defined in the data dictionary.
+2) Using text symbols of assistance class.
+3) OTR(Online Text Repository).
+
+
+                                                       
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+

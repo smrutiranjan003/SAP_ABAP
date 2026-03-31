@@ -1,0 +1,18 @@
+*Problem statement : No output in module pool program.
+*Solution : The layout element names must match with our variable names which we used during coding.
+*To replicate the scenario, create a module pool program.
+*In the layout pass - LV-VBELN and in the code use LV_VBELN. 
+*VBELN is input and ERDAT, ERZET, ERNAM and VBTYP are output.
+
+
+
+DATA : lv_vbeln TYPE vbeln_va.
+DATA : lv_erdat TYPE erdat.
+DATA : lv_erzet TYPE erzet.
+DATA : lv_ernam TYPE ernam.
+DATA : lv_vbtyp TYPE vbtyp.
+
+SELECT SINGLE erdat erzet ernam vbtyp
+  FROM vbak
+  INTO ( lv_erdat, lv_erzet, lv_ernam, lv_vbtyp )
+  WHERE vbeln = lv_vbeln.

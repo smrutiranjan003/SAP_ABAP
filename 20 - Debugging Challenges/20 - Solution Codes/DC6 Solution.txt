@@ -1,0 +1,114 @@
+*&---------------------------------------------------------------------*
+*& Report ZDEBUG_7
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+*Problem statement : All ALV columns become editable.
+*Solution : CLEAR the workareas after every append statement.
+
+REPORT zdebug_7.
+
+DATA : lt_final TYPE ztstr_sales_details.
+DATA : lwa_final TYPE zstr_sales_details.
+DATA : lt_fieldcat TYPE slis_t_fieldcat_alv.
+DATA : lwa_fieldcat TYPE slis_fieldcat_alv.
+
+PARAMETERS : p_vbeln TYPE vbeln_va.
+
+CALL FUNCTION 'ZFM_SALES'
+  EXPORTING
+    pvbeln    = p_vbeln
+  IMPORTING
+    lt_output = lt_final.
+
+lwa_fieldcat-col_pos = '1'.
+lwa_fieldcat-fieldname = 'VBELN'.
+lwa_fieldcat-seltext_l = TEXT-000.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+
+lwa_fieldcat-col_pos = '2'.
+lwa_fieldcat-fieldname = 'ERDAT'.
+lwa_fieldcat-seltext_l = TEXT-001.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+lwa_fieldcat-col_pos = '3'.
+lwa_fieldcat-fieldname = 'ERZET'.
+lwa_fieldcat-seltext_l = TEXT-002.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+lwa_fieldcat-col_pos = '4'.
+lwa_fieldcat-fieldname = 'ERNAM'.
+lwa_fieldcat-edit = 'X'.
+lwa_fieldcat-seltext_l = TEXT-003.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+lwa_fieldcat-col_pos = '5'.
+lwa_fieldcat-fieldname = 'POSNR'.
+lwa_fieldcat-seltext_l = TEXT-004.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+lwa_fieldcat-col_pos = '6'.
+lwa_fieldcat-fieldname = 'MATNR'.
+lwa_fieldcat-seltext_l = TEXT-005.
+APPEND lwa_fieldcat TO lt_fieldcat.
+CLEAR : lwa_fieldcat.
+
+CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+  EXPORTING
+*   I_INTERFACE_CHECK                 = ' '
+*   I_BYPASSING_BUFFER                = ' '
+*   I_BUFFER_ACTIVE                   = ' '
+*   I_CALLBACK_PROGRAM                = ' '
+*   I_CALLBACK_PF_STATUS_SET          = ' '
+*   I_CALLBACK_USER_COMMAND           = ' '
+*   I_CALLBACK_TOP_OF_PAGE            = ' '
+*   I_CALLBACK_HTML_TOP_OF_PAGE       = ' '
+*   I_CALLBACK_HTML_END_OF_LIST       = ' '
+*   I_STRUCTURE_NAME                  =
+*   I_BACKGROUND_ID                   = ' '
+*   I_GRID_TITLE                      =
+*   I_GRID_SETTINGS                   =
+*   IS_LAYOUT   =
+    it_fieldcat = lt_fieldcat
+*   IT_EXCLUDING                      =
+*   IT_SPECIAL_GROUPS                 =
+*   IT_SORT     =
+*   IT_FILTER   =
+*   IS_SEL_HIDE =
+*   I_DEFAULT   = 'X'
+*   I_SAVE      = ' '
+*   IS_VARIANT  =
+*   IT_EVENTS   =
+*   IT_EVENT_EXIT                     =
+*   IS_PRINT    =
+*   IS_REPREP_ID                      =
+*   I_SCREEN_START_COLUMN             = 0
+*   I_SCREEN_START_LINE               = 0
+*   I_SCREEN_END_COLUMN               = 0
+*   I_SCREEN_END_LINE                 = 0
+*   I_HTML_HEIGHT_TOP                 = 0
+*   I_HTML_HEIGHT_END                 = 0
+*   IT_ALV_GRAPHICS                   =
+*   IT_HYPERLINK                      =
+*   IT_ADD_FIELDCAT                   =
+*   IT_EXCEPT_QINFO                   =
+*   IR_SALV_FULLSCREEN_ADAPTER        =
+*   O_PREVIOUS_SRAL_HANDLER           =
+* IMPORTING
+*   E_EXIT_CAUSED_BY_CALLER           =
+*   ES_EXIT_CAUSED_BY_USER            =
+  TABLES
+    t_outtab    = lt_final
+* EXCEPTIONS
+*   PROGRAM_ERROR                     = 1
+*   OTHERS      = 2
+  .
+IF sy-subrc <> 0.
+* Implement suitable error handling here
+ENDIF.

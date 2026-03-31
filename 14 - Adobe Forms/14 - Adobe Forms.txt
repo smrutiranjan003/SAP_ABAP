@@ -1,0 +1,189 @@
+                                                    Adobe Forms
+
+Transaction code for Adobe forms : SFP
+
+Difference between Adobe forms and Smartforms.
+
+1) Smartforms are not interactive forms. Adobe forms are Interactive Smartforms.
+2) In Smartforms - the form Interface , Global definitions, Pages, Windows are all together.
+   In Adobe forms - The form Interface, Global definition are the part of Interface.
+                    We design the layout seperately in a form.
+   The Interface can be used in several number of Adobe forms. 
+
+
+
+Types of Interface in Adobe forms :  1) ABAP Dictionary based Interface.
+                                     2) XML schema based interface.
+                                     3) Smartform compatible interface.
+
+Types of Layout in Adobe Forms : 1) Standard Layout.
+                                 2) ZCI Layout
+                                 3) xACF Layout
+                                 4) Unknown Layout Type
+
+What are the system variables available in context tab of Adobe form?
+
+DATE( SFPSY-DATE)
+TIME( SFPSY-TIME)
+USERNAME( SFPSY-USERNAME)
+SUBRC( SFPSY-SUBRC)
+
+In Which view we are desiging the layout in Adobe forms?
+
+Design View.
+
+In which view the data is available?
+
+Data View.
+
+What is the path to reset the pallets?
+
+Pallettes->Workspace->Reset Pallettes Locations.
+
+
+What is the pre-requisite to display a Image in output of Adobe forms?
+
+Answer : Select the checkbox - Embed Image data in the Object.
+
+
+How to display a date in a specific format in Adobe forms?
+
+Answer : Drag and drop the Date/Time Field from Library pallet into Layout. 
+
+Right click on it -> Go to Palletes -> select Object -> go to the Field tab ->
+
+In Display Pattern you simply specify the date format as DD.MM.YYYY and the active it and test it.
+
+
+
+Function modules used in Adobe forms
+
+1) FP_JOB_OPEN
+2) FP_FUNCTION_MODULE_NAME
+3) FP_JOB_CLOSE
+
+
+Master Page
+
+Every form design contains at least one master page that Adobe LiveCycle Designer creates automatically. 
+Master pages are responsible for formatting body pages. 
+They help to facilitate design consistency 
+because they can provide a background and layout format for more than one of the body pages in a form design.
+
+
+Body pages
+
+Body pages represent the pages of a form. Each body page derives its page size and orientation from a master page, and by default, 
+each body page is associated with the default master page that LiveCycle Designer creates.
+Each body page is created with a default subform that covers the whole page.
+
+Important Points :
+
+To Shift data to next page - choose the page content as flowed.
+
+Scripting languages of Adobe forms :
+
+Formcalc.
+Javascript.
+
+Javascript code for a full element path:
+
+if ( xfa.resolveNode("data.SalesOrderPage.SalesOrderInput.SalesOrderInput").rawValue == "4970" ) 
+{
+ presence = "hidden";
+ }
+ else
+ {
+ presence = "visible";
+ }
+
+XFA -> XML form architecture
+ADS -> Adobe Document Services Server
+
+
+Link : https://blogs.sap.com/2019/07/22/common-errors-and-difficulties-faced-in-adobe-forms-beginners/
+
+Layout type Link: 
+
+https://help.sap.com/doc/saphelp_scm70/7.0/ru-RU/45/2cb44a40594c2ce10000000a1553f6/content.htm?no_cache=true
+
+Alternative in Adobe forms:
+
+https://blogs.sap.com/2016/08/03/working-with-alternatives-in-adobe-forms/
+
+Dynamic Logo in Adobe forms:
+
+https://www.scribd.com/document/440653402/Dynamically-Populating-the-Logo-on-the-Adobe-Form
+
+                                                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+
+
+
+
