@@ -1,14 +1,16 @@
 # SAP ABAP Learning Repository
 
-A well-structured SAP ABAP learning repository covering everything from basics to advanced concepts, including real-time scenarios, exercises, and capstone projects.
+A structured and comprehensive collection of SAP ABAP learning materials, covering fundamentals to advanced topics, along with real-time scenarios, projects, and practice exercises.
 
 ---
 
-## 📘 Course Navigation
+## 📘 Course Overview
 
-Click on any topic below to directly open the corresponding folder.
+This repository is organized into multiple modules to help you progressively build expertise in SAP ABAP.
 
 ---
+
+# 📂 Modules
 
 ## 🔰 Getting Started
 - [0 - SAP ABAP Guidance](./0%20-%20SAP%20ABAP%20Guidance/)
@@ -77,27 +79,29 @@ Click on any topic below to directly open the corresponding folder.
 ---
 
 ## 🧩 Capstone Projects
+Apply your knowledge with hands-on projects designed to simulate real-world SAP environments.
 - [Capstone Projects](./Capstone%20Projects/)
 
 ---
 
 ## 🗂 Repository Info
-- Maintained by: **smrutiranjan003**
+- Maintained by: **[smrutiranjan003](https://github.com/smrutiranjan003/)**
 - Structured for step-by-step learning
 - Covers both theoretical and practical aspects
+- Regular updates with new learning materials and examples
 
 ---
 
 ## ⭐ How to Use
-1. Start from **Basics**
-2. Move sequentially through modules  
-3. Practice using exercises and scenarios  
-4. Complete **Capstone Projects** for real-world experience  
+1. Start from **Basics** and progress sequentially 
+2. Practice alongside each module  
+3. Explore real-time scenarios for practical understanding 
+4. Complete **Capstone Projects** for real-world experience and solidify your skills    
 
 ---
 
 ## 🤝 Contribution
-Contributions are welcome. Feel free to improve content, fix issues, or add more examples.
+Contributions are welcome. Feel free to contribute by adding improvements, fixes, or new learning materials.
 
 ---
 
